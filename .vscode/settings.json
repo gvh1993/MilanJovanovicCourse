@@ -1,0 +1,4 @@
+{
+  "dotnet.defaultSolution": "src/Bookify.Domain/Bookify.Domain.sln",
+  "cSpell.words": ["Bookify"]
+}
