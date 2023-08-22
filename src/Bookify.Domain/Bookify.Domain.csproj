@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="mediatr.contracts" Version="2.0.1" />
+  </ItemGroup>
+
 </Project>
