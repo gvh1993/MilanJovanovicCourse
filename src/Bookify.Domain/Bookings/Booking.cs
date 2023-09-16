@@ -1,12 +1,9 @@
-using System.Reflection;
-using System.Runtime.Intrinsics.X86;
-using System.Net;
 using Bookify.Domain.Abstractions;
 using Bookify.Domain.Apartments;
-using Bookify.Domain.Booking.Events;
+using Bookify.Domain.Bookings.Events;
 using Bookify.Domain.Shared;
 
-namespace Bookify.Domain.Booking;
+namespace Bookify.Domain.Bookings;
 
 public sealed class Booking : Entity
 {
@@ -29,7 +26,7 @@ public sealed class Booking : Entity
         Duration = duration;
         PriceForPeriod = priceForPeriod;
         CleaningFee = cleaningFee;
-        amenitiesUpCharge = amenitiesUpCharge;
+        AmenitiesUpCharge = amenitiesUpCharge;
         TotalPrice = totalPrice;
         Status = status;
         CreatedOnUtc = createdOnUtc;

@@ -1,7 +1,7 @@
 using Bookify.Domain.Apartments;
 using Bookify.Domain.Shared;
 
-namespace Bookify.Domain.Booking;
+namespace Bookify.Domain.Bookings;
 
 public class PricingService
 {
