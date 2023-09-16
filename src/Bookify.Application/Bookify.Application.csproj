@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="dapper" Version="2.0.151" />
+    <PackageReference Include="fluentvalidation.dependencyInjectionExtensions" Version="11.7.1" />
     <PackageReference Include="mediatr" Version="12.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
