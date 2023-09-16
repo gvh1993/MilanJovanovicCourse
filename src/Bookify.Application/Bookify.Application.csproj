@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="dapper" Version="2.0.151" />
     <PackageReference Include="mediatr" Version="12.1.1" />
   </ItemGroup>
 
