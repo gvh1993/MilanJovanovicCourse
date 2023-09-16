@@ -70,7 +70,7 @@ public sealed class Booking : Entity
             utcNow
         );
 
-        booking.RaiseDomainEvent(new BookingReservedDomainEvent(booking.Id));
+        booking.RaiseDomainEvent(new BookingReservedDomainEvent(booking.Id, userId));
 
         apartment.LastBookedOnUtc = utcNow;
 
