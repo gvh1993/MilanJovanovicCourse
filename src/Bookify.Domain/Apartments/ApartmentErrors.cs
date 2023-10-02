@@ -1,6 +1,6 @@
 ﻿using Bookify.Domain.Abstractions;
 
-namespace Bookify.Domain;
+namespace Bookify.Domain.Apartments;
 
 public static class ApartmentErrors
 {

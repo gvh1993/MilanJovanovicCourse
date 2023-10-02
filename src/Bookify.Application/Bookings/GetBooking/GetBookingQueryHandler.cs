@@ -1,7 +1,9 @@
-﻿using Bookify.Domain.Abstractions;
+﻿using Bookify.Application.Abstractions.Data;
+using Bookify.Application.Abstractions.Messaging;
+using Bookify.Domain.Abstractions;
 using Dapper;
 
-namespace Bookify.Application;
+namespace Bookify.Application.Bookings.GetBooking;
 
 internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, BookingResponse>
 {
@@ -17,8 +19,8 @@ internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Bo
         using var connection = _sqlConnectionFactory.CreateConnection();
 
         const string sql = """
-            Select
-                id as Id,
+            SELECT
+                id AS Id,
                 apartment_id AS ApartmentId,
                 user_id AS UserId,
                 status AS Status,
@@ -33,14 +35,16 @@ internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Bo
                 duration_start AS DurationStart,
                 duration_end AS DurationEnd,
                 created_on_utc AS CreatedOnUtc
-            From Bookings
-            Where id = @BookingId
+            FROM bookings
+            WHERE id = @BookingId
             """;
 
         var booking = await connection.QueryFirstOrDefaultAsync<BookingResponse>(
             sql,
-            new { request.BookingId }
-        );
+            new
+            {
+                request.BookingId
+            });
 
         return booking;
     }

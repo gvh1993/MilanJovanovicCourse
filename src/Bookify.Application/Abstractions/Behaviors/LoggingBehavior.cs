@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using Bookify.Application.Abstractions.Messaging;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Bookify.Application;
+namespace Bookify.Application.Abstractions.Behaviors;
 
-public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class LoggingBehavior<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IBaseCommand
 {
     private readonly ILogger<TRequest> _logger;
@@ -13,18 +15,15 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         _logger = logger;
     }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(
+        TRequest request,
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
     {
         var name = request.GetType().Name;
 
         try
         {
-            // Ideas for extra logging:
-            //   Who is making the request?
-            //   request id / correlationId?
-            //   What was the request?
-            //   which instance of the server?
-
             _logger.LogInformation("Executing command {Command}", name);
 
             var result = await next();

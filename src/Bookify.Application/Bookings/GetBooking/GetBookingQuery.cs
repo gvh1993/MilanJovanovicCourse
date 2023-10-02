@@ -1,3 +1,5 @@
-﻿namespace Bookify.Application;
+﻿using Bookify.Application.Abstractions.Messaging;
 
-public sealed record class GetBookingQuery(Guid BookingId) : IQuery<BookingResponse>;
+namespace Bookify.Application.Bookings.GetBooking;
+
+public sealed record GetBookingQuery(Guid BookingId) : IQuery<BookingResponse>;

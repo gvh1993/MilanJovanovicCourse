@@ -1,6 +1,6 @@
 ﻿using Bookify.Domain.Abstractions;
 
-namespace Bookify.Domain;
+namespace Bookify.Domain.Users;
 
 public static class UserErrors
 {

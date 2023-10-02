@@ -1,10 +1,13 @@
-﻿using Bookify.Domain.Abstractions;
+﻿using Bookify.Application.Abstractions.Data;
+using Bookify.Application.Abstractions.Messaging;
+using Bookify.Domain.Abstractions;
 using Bookify.Domain.Bookings;
 using Dapper;
 
-namespace Bookify.Application;
+namespace Bookify.Application.Apartments.SearchApartments;
 
-internal sealed class SearchApartmentsQueryHandler : IQueryHandler<SearchApartmentQuery, IReadOnlyList<ApartmentResponse>>
+internal sealed class SearchApartmentsQueryHandler
+    : IQueryHandler<SearchApartmentsQuery, IReadOnlyList<ApartmentResponse>>
 {
     private static readonly int[] ActiveBookingStatuses =
     {
@@ -20,7 +23,7 @@ internal sealed class SearchApartmentsQueryHandler : IQueryHandler<SearchApartme
         _sqlConnectionFactory = sqlConnectionFactory;
     }
 
-    public async Task<Result<IReadOnlyList<ApartmentResponse>>> Handle(SearchApartmentQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IReadOnlyList<ApartmentResponse>>> Handle(SearchApartmentsQuery request, CancellationToken cancellationToken)
     {
         if (request.StartDate > request.EndDate)
         {
@@ -41,7 +44,7 @@ internal sealed class SearchApartmentsQueryHandler : IQueryHandler<SearchApartme
                 a.address_zip_code AS ZipCode,
                 a.address_city AS City,
                 a.address_street AS Street
-            From apartments AS a
+            FROM apartments AS a
             WHERE NOT EXISTS
             (
                 SELECT 1
@@ -49,25 +52,27 @@ internal sealed class SearchApartmentsQueryHandler : IQueryHandler<SearchApartme
                 WHERE
                     b.apartment_id = a.id AND
                     b.duration_start <= @EndDate AND
-                    b.duration_end >= @StartDAte AND
+                    b.duration_end >= @StartDate AND
                     b.status = ANY(@ActiveBookingStatuses)
             )
-        """;
+            """;
 
         var apartments = await connection
-            .QueryAsync<ApartmentResponse, AddressResponse, ApartmentResponse>(sql,
+            .QueryAsync<ApartmentResponse, AddressResponse, ApartmentResponse>(
+                sql,
                 (apartment, address) =>
-            {
-                apartment.Address = address;
+                {
+                    apartment.Address = address;
 
-                return apartment;
-            }, new
-            {
-                request.StartDate,
-                request.EndDate,
-                ActiveBookingStatuses
-            },
-            splitOn: "Country");
+                    return apartment;
+                },
+                new
+                {
+                    request.StartDate,
+                    request.EndDate,
+                    ActiveBookingStatuses
+                },
+                splitOn: "Country");
 
         return apartments.ToList();
     }

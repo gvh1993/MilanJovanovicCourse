@@ -1,9 +1,14 @@
-namespace Bookify.Domain.Bookings;
+﻿namespace Bookify.Domain.Bookings;
 
-public record DateRange()
+public record DateRange
 {
-    public DateOnly Start { get; set; }
-    public DateOnly End { get; set; }
+    private DateRange()
+    {
+    }
+
+    public DateOnly Start { get; init; }
+
+    public DateOnly End { get; init; }
 
     public int LengthInDays => End.DayNumber - Start.DayNumber;
 
@@ -20,4 +25,4 @@ public record DateRange()
             End = end
         };
     }
-};
+}
