@@ -22,8 +22,10 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(user => user.Email)
             .HasMaxLength(400)
-            .HasConversion(email => email.Value, value => new Domain.Users.Email(value)); ;
+            .HasConversion(email => email.Value, value => new Domain.Users.Email(value));
 
         builder.HasIndex(user => user.Email).IsUnique();
+
+        builder.HasIndex(user => user.IdentityId).IsUnique();
     }
 }
