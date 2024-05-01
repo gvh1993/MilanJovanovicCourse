@@ -37,7 +37,7 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         {
             AddDomainEventsAsOutboxMessages();
 
-            var result = await base.SaveChangesAsync(cancellationToken);
+            int result = await base.SaveChangesAsync(cancellationToken);
 
             return result;
         }
@@ -54,7 +54,7 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
             .Select(entry => entry.Entity)
             .SelectMany(entity =>
             {
-                var domainEvents = entity.GetDomainEvents();
+                IReadOnlyList<IDomainEvent> domainEvents = entity.GetDomainEvents();
 
                 entity.ClearDomainEvents();
 

@@ -1,4 +1,5 @@
-﻿using Bookify.Application.Abstractions.Data;
+﻿using System.Data;
+using Bookify.Application.Abstractions.Data;
 using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Abstractions;
 using Bookify.Domain.Bookings;
@@ -30,7 +31,7 @@ internal sealed class SearchApartmentsQueryHandler
             return new List<ApartmentResponse>();
         }
 
-        using var connection = _sqlConnectionFactory.CreateConnection();
+        using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
 
         const string sql = """
             SELECT
@@ -57,7 +58,7 @@ internal sealed class SearchApartmentsQueryHandler
             )
             """;
 
-        var apartments = await connection
+        IEnumerable<ApartmentResponse> apartments = await connection
             .QueryAsync<ApartmentResponse, AddressResponse, ApartmentResponse>(
                 sql,
                 (apartment, address) =>

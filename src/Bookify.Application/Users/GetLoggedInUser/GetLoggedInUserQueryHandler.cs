@@ -1,4 +1,5 @@
-﻿using Bookify.Application.Abstractions.Authentication;
+﻿using System.Data;
+using Bookify.Application.Abstractions.Authentication;
 using Bookify.Application.Abstractions.Data;
 using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Abstractions;
@@ -24,7 +25,7 @@ internal sealed class GetLoggedInUserQueryHandler
         GetLoggedInUserQuery request,
         CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.CreateConnection();
+        using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
 
         const string sql = """
             SELECT
@@ -36,7 +37,7 @@ internal sealed class GetLoggedInUserQueryHandler
             WHERE identity_id = @IdentityId
             """;
 
-        var user = await connection.QuerySingleAsync<UserResponse>(
+        UserResponse user = await connection.QuerySingleAsync<UserResponse>(
             sql,
             new
             {

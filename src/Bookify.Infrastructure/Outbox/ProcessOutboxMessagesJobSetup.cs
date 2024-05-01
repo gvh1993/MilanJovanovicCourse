@@ -3,7 +3,7 @@ using Quartz;
 
 namespace Bookify.Infrastructure.Outbox;
 
-public class ProcessOutboxMessagesJobSetup : IConfigureOptions<QuartzOptions>
+internal sealed class ProcessOutboxMessagesJobSetup : IConfigureOptions<QuartzOptions>
 {
     private readonly OutboxOptions _outboxOptions;
 

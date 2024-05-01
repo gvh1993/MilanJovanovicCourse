@@ -1,3 +1,3 @@
 ﻿namespace Bookify.Domain.Reviews;
 
-public record Comment(string Value);
+public sealed record Comment(string Value);

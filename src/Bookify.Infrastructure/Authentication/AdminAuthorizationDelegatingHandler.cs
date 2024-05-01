@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace Bookify.Infrastructure.Authentication;
 
-public sealed class AdminAuthorizationDelegatingHandler : DelegatingHandler
+internal sealed class AdminAuthorizationDelegatingHandler : DelegatingHandler
 {
     private readonly KeycloakOptions _keycloakOptions;
 
@@ -19,13 +19,13 @@ public sealed class AdminAuthorizationDelegatingHandler : DelegatingHandler
         HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
-        var authorizationToken = await GetAuthorizationToken(cancellationToken);
+        AuthorizationToken authorizationToken = await GetAuthorizationToken(cancellationToken);
 
         request.Headers.Authorization = new AuthenticationHeaderValue(
             JwtBearerDefaults.AuthenticationScheme,
             authorizationToken.AccessToken);
 
-        var httpResponseMessage = await base.SendAsync(request, cancellationToken);
+        HttpResponseMessage httpResponseMessage = await base.SendAsync(request, cancellationToken);
 
         httpResponseMessage.EnsureSuccessStatusCode();
 
@@ -44,18 +44,18 @@ public sealed class AdminAuthorizationDelegatingHandler : DelegatingHandler
 
         var authorizationRequestContent = new FormUrlEncodedContent(authorizationRequestParameters);
 
-        var authorizationRequest = new HttpRequestMessage(
+        using var authorizationRequest = new HttpRequestMessage(
             HttpMethod.Post,
             new Uri(_keycloakOptions.TokenUrl))
         {
             Content = authorizationRequestContent
         };
 
-        var authorizationResponse = await base.SendAsync(authorizationRequest, cancellationToken);
+        HttpResponseMessage authorizationResponse = await base.SendAsync(authorizationRequest, cancellationToken);
 
         authorizationResponse.EnsureSuccessStatusCode();
 
-        return await authorizationResponse.Content.ReadFromJsonAsync<AuthorizationToken>() ??
+        return await authorizationResponse.Content.ReadFromJsonAsync<AuthorizationToken>(cancellationToken) ??
                throw new ApplicationException();
     }
 }

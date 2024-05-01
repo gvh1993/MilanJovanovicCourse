@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Bookify.Application.Bookings.GetBooking;
 using Bookify.Application.Bookings.ReserveBooking;
+using Bookify.Domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ public class BookingsController : ControllerBase
     {
         var query = new GetBookingQuery(id);
 
-        var result = await _sender.Send(query, cancellationToken);
+        Result<BookingResponse> result = await _sender.Send(query, cancellationToken);
 
         return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
@@ -41,7 +42,7 @@ public class BookingsController : ControllerBase
             request.StartDate,
             request.EndDate);
 
-        var result = await _sender.Send(command, cancellationToken);
+        Result<Guid> result = await _sender.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {

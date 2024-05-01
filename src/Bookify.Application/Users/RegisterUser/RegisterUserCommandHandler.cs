@@ -30,7 +30,7 @@ internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserC
             new LastName(request.LastName),
             new Email(request.Email));
 
-        var identityId = await _authenticationService.RegisterAsync(
+        string identityId = await _authenticationService.RegisterAsync(
             user,
             request.Password,
             cancellationToken);
@@ -39,7 +39,7 @@ internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserC
 
         _userRepository.Add(user);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user.Id;
     }

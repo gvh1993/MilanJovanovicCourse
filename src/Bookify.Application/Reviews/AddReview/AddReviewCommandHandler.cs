@@ -27,21 +27,21 @@ internal sealed class AddReviewCommandHandler : ICommandHandler<AddReviewCommand
 
     public async Task<Result> Handle(AddReviewCommand request, CancellationToken cancellationToken)
     {
-        var booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
+        Booking? booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
 
         if (booking is null)
         {
             return Result.Failure(BookingErrors.NotFound);
         }
 
-        var ratingResult = Rating.Create(request.Rating);
+        Result<Rating> ratingResult = Rating.Create(request.Rating);
 
         if (ratingResult.IsFailure)
         {
             return Result.Failure(ratingResult.Error);
         }
 
-        var reviewResult = Review.Create(
+        Result<Review> reviewResult = Review.Create(
             booking,
             ratingResult.Value,
             new Comment(request.Comment),

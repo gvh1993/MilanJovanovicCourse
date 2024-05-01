@@ -2,7 +2,7 @@
 
 namespace Bookify.Infrastructure.Authorization;
 
-public class UserRolesResponse
+internal sealed class UserRolesResponse
 {
     public Guid UserId { get; init; }
 

@@ -23,14 +23,14 @@ internal sealed class CompleteBookingCommandHandler : ICommandHandler<CompleteBo
 
     public async Task<Result> Handle(CompleteBookingCommand request, CancellationToken cancellationToken)
     {
-        var booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
+        Booking? booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
 
         if (booking is null)
         {
             return Result.Failure(BookingErrors.NotFound);
         }
 
-        var result = booking.Complete(_dateTimeProvider.UtcNow);
+        Result result = booking.Complete(_dateTimeProvider.UtcNow);
 
         if (result.IsFailure)
         {

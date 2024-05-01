@@ -1,6 +1,6 @@
 ﻿namespace Bookify.Infrastructure.Authentication.Models;
 
-public class CredentialRepresentationModel
+internal class CredentialRepresentationModel
 {
     public string Algorithm { get; set; }
 

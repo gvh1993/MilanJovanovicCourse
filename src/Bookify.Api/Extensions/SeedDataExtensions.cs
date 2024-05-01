@@ -1,23 +1,24 @@
-﻿using Bogus;
+﻿using System.Data;
+using Bogus;
 using Bookify.Application.Abstractions.Data;
 using Bookify.Domain.Apartments;
 using Dapper;
 
 namespace Bookify.Api.Extensions;
 
-public static class SeedDataExtensions
+internal static class SeedDataExtensions
 {
     public static void SeedData(this IApplicationBuilder app)
     {
-        using var scope = app.ApplicationServices.CreateScope();
+        using IServiceScope scope = app.ApplicationServices.CreateScope();
 
-        var sqlConnectionFactory = scope.ServiceProvider.GetRequiredService<ISqlConnectionFactory>();
-        using var connection = sqlConnectionFactory.CreateConnection();
+        ISqlConnectionFactory sqlConnectionFactory = scope.ServiceProvider.GetRequiredService<ISqlConnectionFactory>();
+        using IDbConnection connection = sqlConnectionFactory.CreateConnection();
 
         var faker = new Faker();
 
         List<object> apartments = new();
-        for (var i = 0; i < 100; i++)
+        for (int i = 0; i < 100; i++)
         {
             apartments.Add(new
             {

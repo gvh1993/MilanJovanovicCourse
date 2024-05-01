@@ -20,7 +20,7 @@ public static class DependencyInjection
             configuration.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
         });
 
-        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, includeInternalTypes: true);
 
         services.AddTransient<PricingService>();
 

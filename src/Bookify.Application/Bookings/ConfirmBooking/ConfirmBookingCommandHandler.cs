@@ -25,14 +25,14 @@ internal sealed class ConfirmBookingCommandHandler : ICommandHandler<ConfirmBook
         ConfirmBookingCommand request,
         CancellationToken cancellationToken)
     {
-        var booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
+        Booking? booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
 
         if (booking is null)
         {
             return Result.Failure(BookingErrors.NotFound);
         }
 
-        var result = booking.Confirm(_dateTimeProvider.UtcNow);
+        Result result = booking.Confirm(_dateTimeProvider.UtcNow);
 
         if (result.IsFailure)
         {

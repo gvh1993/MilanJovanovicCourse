@@ -5,7 +5,7 @@ using Serilog.Context;
 
 namespace Bookify.Application.Abstractions.Behaviors;
 
-public class LoggingBehavior<TRequest, TResponse>
+internal sealed class LoggingBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IBaseRequest
     where TResponse : Result
@@ -22,13 +22,13 @@ public class LoggingBehavior<TRequest, TResponse>
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        var requestName = request.GetType().Name;
+        string requestName = request.GetType().Name;
 
         try
         {
             _logger.LogInformation("Executing request {RequestName}", requestName);
 
-            var result = await next();
+            TResponse result = await next();
 
             if (result.IsSuccess)
             {

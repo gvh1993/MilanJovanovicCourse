@@ -43,18 +43,18 @@ internal sealed class ProcessOutboxMessagesJob : IJob
     {
         _logger.LogInformation("Beginning to process outbox messages");
 
-        using var connection = _sqlConnectionFactory.CreateConnection();
-        using var transaction = connection.BeginTransaction();
+        using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
+        using IDbTransaction transaction = connection.BeginTransaction();
 
-        var outboxMessages = await GetOutboxMessagesAsync(connection, transaction);
+        IReadOnlyList<OutboxMessageResponse> outboxMessages = await GetOutboxMessagesAsync(connection, transaction);
 
-        foreach (var outboxMessage in outboxMessages)
+        foreach (OutboxMessageResponse outboxMessage in outboxMessages)
         {
             Exception? exception = null;
 
             try
             {
-                var domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(
+                IDomainEvent domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(
                     outboxMessage.Content,
                     JsonSerializerSettings)!;
 
@@ -82,16 +82,18 @@ internal sealed class ProcessOutboxMessagesJob : IJob
         IDbConnection connection,
         IDbTransaction transaction)
     {
-        var sql = $"""                
-            SELECT id, content
-            FROM outbox_messages
-            WHERE processed_on_utc IS NULL
-            ORDER BY occurred_on_utc
-            LIMIT {_outboxOptions.BatchSize}
-            FOR UPDATE
-            """;
+        string sql = $"""
+                      SELECT id, content
+                      FROM outbox_messages
+                      WHERE processed_on_utc IS NULL
+                      ORDER BY occurred_on_utc
+                      LIMIT {_outboxOptions.BatchSize}
+                      FOR UPDATE
+                      """;
 
-        var outboxMessages = await connection.QueryAsync<OutboxMessageResponse>(sql, transaction: transaction);
+        IEnumerable<OutboxMessageResponse> outboxMessages = await connection.QueryAsync<OutboxMessageResponse>(
+            sql,
+            transaction: transaction);
 
         return outboxMessages.ToList();
     }

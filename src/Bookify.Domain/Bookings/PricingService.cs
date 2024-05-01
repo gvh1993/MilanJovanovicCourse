@@ -7,14 +7,14 @@ public class PricingService
 {
     public PricingDetails CalculatePrice(Apartment apartment, DateRange period)
     {
-        var currency = apartment.Price.Currency;
+        Currency currency = apartment.Price.Currency;
 
         var priceForPeriod = new Money(
             apartment.Price.Amount * period.LengthInDays,
             currency);
 
         decimal percentageUpCharge = 0;
-        foreach (var amenity in apartment.Amenities)
+        foreach (Amenity amenity in apartment.Amenities)
         {
             percentageUpCharge += amenity switch
             {

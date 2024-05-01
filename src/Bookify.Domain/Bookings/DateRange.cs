@@ -1,6 +1,6 @@
 ﻿namespace Bookify.Domain.Bookings;
 
-public record DateRange
+public sealed record DateRange
 {
     private DateRange()
     {

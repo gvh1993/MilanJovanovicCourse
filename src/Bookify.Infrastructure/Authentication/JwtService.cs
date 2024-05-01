@@ -38,13 +38,18 @@ internal sealed class JwtService : IJwtService
                 new("password", password)
             };
 
-            var authorizationRequestContent = new FormUrlEncodedContent(authRequestParameters);
+            using var authorizationRequestContent = new FormUrlEncodedContent(authRequestParameters);
 
-            var response = await _httpClient.PostAsync("", authorizationRequestContent, cancellationToken);
+            HttpResponseMessage response = await _httpClient.PostAsync(
+                "",
+                authorizationRequestContent,
+                cancellationToken);
 
             response.EnsureSuccessStatusCode();
 
-            var authorizationToken = await response.Content.ReadFromJsonAsync<AuthorizationToken>();
+            AuthorizationToken? authorizationToken = await response
+                .Content
+                .ReadFromJsonAsync<AuthorizationToken>(cancellationToken);
 
             if (authorizationToken is null)
             {

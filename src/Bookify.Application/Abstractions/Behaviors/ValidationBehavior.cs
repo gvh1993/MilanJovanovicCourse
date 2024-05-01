@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Bookify.Application.Abstractions.Behaviors;
 
-public class ValidationBehavior<TRequest, TResponse>
+internal sealed class ValidationBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IBaseCommand
 {

@@ -1,4 +1,5 @@
-﻿using Bookify.Application.Abstractions.Authentication;
+﻿using System.Data;
+using Bookify.Application.Abstractions.Authentication;
 using Bookify.Application.Abstractions.Data;
 using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Abstractions;
@@ -20,7 +21,7 @@ internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Bo
 
     public async Task<Result<BookingResponse>> Handle(GetBookingQuery request, CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.CreateConnection();
+        using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
 
         const string sql = """
             SELECT
@@ -43,7 +44,7 @@ internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Bo
             WHERE id = @BookingId
             """;
 
-        var booking = await connection.QueryFirstOrDefaultAsync<BookingResponse>(
+        BookingResponse? booking = await connection.QueryFirstOrDefaultAsync<BookingResponse>(
             sql,
             new
             {

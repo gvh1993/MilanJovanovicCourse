@@ -2,7 +2,7 @@
 
 namespace Bookify.Infrastructure.Authentication.Models;
 
-public sealed class UserRepresentationModel
+internal sealed class UserRepresentationModel
 {
     public Dictionary<string, string> Access { get; set; }
 

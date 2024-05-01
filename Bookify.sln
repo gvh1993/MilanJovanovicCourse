@@ -13,9 +13,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.Application", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.Infrastructure", "src\Bookify.Infrastructure\Bookify.Infrastructure.csproj", "{A2F42B52-0328-4968-8EB0-B3CBCA02A808}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookify.Api", "src\Bookify.Api\Bookify.Api.csproj", "{668B54A6-2BEC-42D5-B60F-709C24731C8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.Api", "src\Bookify.Api\Bookify.Api.csproj", "{668B54A6-2BEC-42D5-B60F-709C24731C8C}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.Domain.UnitTests", "test\Bookify.Domain.UnitTests\Bookify.Domain.UnitTests.csproj", "{A158CDA1-EA07-459F-A6E7-645CF0576EC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.Application.UnitTests", "test\Bookify.Application.UnitTests\Bookify.Application.UnitTests.csproj", "{F6823C4B-1FD2-46B2-A167-AA0EB3F4FED3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.Application.IntegrationTests", "test\Bookify.Application.IntegrationTests\Bookify.Application.IntegrationTests.csproj", "{E7F6A97A-7335-4568-80BB-0944F5A5E8FE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.Api.FunctionalTests", "test\Bookify.Api.FunctionalTests\Bookify.Api.FunctionalTests.csproj", "{998E97E0-48F5-4FBE-9535-CBD074D3226B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.ArchitectureTests", "test\Bookify.ArchitectureTests\Bookify.ArchitectureTests.csproj", "{E2BABD95-C6B2-4DC3-BEBB-BA5A4FB16580}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{549D3B7B-7C98-440B-B27E-4FC6DDE9441E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +59,26 @@ Global
 		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADD5AF21-A432-4B22-BA2A-479AE85F98FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A158CDA1-EA07-459F-A6E7-645CF0576EC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A158CDA1-EA07-459F-A6E7-645CF0576EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A158CDA1-EA07-459F-A6E7-645CF0576EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A158CDA1-EA07-459F-A6E7-645CF0576EC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6823C4B-1FD2-46B2-A167-AA0EB3F4FED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6823C4B-1FD2-46B2-A167-AA0EB3F4FED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6823C4B-1FD2-46B2-A167-AA0EB3F4FED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6823C4B-1FD2-46B2-A167-AA0EB3F4FED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7F6A97A-7335-4568-80BB-0944F5A5E8FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7F6A97A-7335-4568-80BB-0944F5A5E8FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7F6A97A-7335-4568-80BB-0944F5A5E8FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7F6A97A-7335-4568-80BB-0944F5A5E8FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{998E97E0-48F5-4FBE-9535-CBD074D3226B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{998E97E0-48F5-4FBE-9535-CBD074D3226B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{998E97E0-48F5-4FBE-9535-CBD074D3226B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{998E97E0-48F5-4FBE-9535-CBD074D3226B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2BABD95-C6B2-4DC3-BEBB-BA5A4FB16580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2BABD95-C6B2-4DC3-BEBB-BA5A4FB16580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2BABD95-C6B2-4DC3-BEBB-BA5A4FB16580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2BABD95-C6B2-4DC3-BEBB-BA5A4FB16580}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +88,11 @@ Global
 		{BE5FDC83-56E9-4CF6-8D9D-0B2C2F11D7F9} = {D97FC30F-7D4C-4EB5-9784-1F403E0CA7CF}
 		{A2F42B52-0328-4968-8EB0-B3CBCA02A808} = {D97FC30F-7D4C-4EB5-9784-1F403E0CA7CF}
 		{668B54A6-2BEC-42D5-B60F-709C24731C8C} = {D97FC30F-7D4C-4EB5-9784-1F403E0CA7CF}
+		{A158CDA1-EA07-459F-A6E7-645CF0576EC2} = {280A8A34-4FED-4ADE-ACDE-8A052F516543}
+		{F6823C4B-1FD2-46B2-A167-AA0EB3F4FED3} = {280A8A34-4FED-4ADE-ACDE-8A052F516543}
+		{E7F6A97A-7335-4568-80BB-0944F5A5E8FE} = {280A8A34-4FED-4ADE-ACDE-8A052F516543}
+		{998E97E0-48F5-4FBE-9535-CBD074D3226B} = {280A8A34-4FED-4ADE-ACDE-8A052F516543}
+		{E2BABD95-C6B2-4DC3-BEBB-BA5A4FB16580} = {280A8A34-4FED-4ADE-ACDE-8A052F516543}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7886086E-5FDE-4346-9331-C3CEE77E1E7A}

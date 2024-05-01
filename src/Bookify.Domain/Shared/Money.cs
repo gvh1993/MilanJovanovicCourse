@@ -1,6 +1,6 @@
 ﻿namespace Bookify.Domain.Shared;
 
-public record Money(decimal Amount, Currency Currency)
+public sealed record Money(decimal Amount, Currency Currency)
 {
     public static Money operator +(Money first, Money second)
     {

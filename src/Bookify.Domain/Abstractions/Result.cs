@@ -38,7 +38,7 @@ public class Result
         value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
 }
 
-public class Result<TValue> : Result
+public sealed class Result<TValue> : Result
 {
     private readonly TValue? _value;
 

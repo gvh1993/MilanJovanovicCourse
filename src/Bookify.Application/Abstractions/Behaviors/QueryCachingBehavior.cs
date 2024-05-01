@@ -40,7 +40,7 @@ internal sealed class QueryCachingBehavior<TRequest, TResponse>
 
         _logger.LogInformation("Cache miss for {Query}", name);
 
-        var result = await next();
+        TResponse result = await next();
 
         if (result.IsSuccess)
         {

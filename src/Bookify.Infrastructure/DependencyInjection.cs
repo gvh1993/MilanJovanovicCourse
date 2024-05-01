@@ -61,13 +61,11 @@ public static class DependencyInjection
 
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Database") ??
-                               throw new ArgumentNullException(nameof(configuration));
+        string connectionString = configuration.GetConnectionString("Database") ??
+                                  throw new ArgumentNullException(nameof(configuration));
 
         services.AddDbContext<ApplicationDbContext>(options =>
-        {
-            options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
-        });
+            options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
 
         services.AddScoped<IUserRepository, UserRepository>();
 
@@ -100,16 +98,16 @@ public static class DependencyInjection
         services.AddTransient<AdminAuthorizationDelegatingHandler>();
 
         services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, httpClient) =>
-            {
-                var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+        {
+            KeycloakOptions keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
 
-                httpClient.BaseAddress = new Uri(keycloakOptions.AdminUrl);
-            })
-            .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
+            httpClient.BaseAddress = new Uri(keycloakOptions.AdminUrl);
+        })
+        .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
 
         services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
         {
-            var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+            KeycloakOptions keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
 
             httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
         });
@@ -132,8 +130,8 @@ public static class DependencyInjection
 
     private static void AddCaching(IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Cache") ??
-                               throw new ArgumentNullException(nameof(configuration));
+        string connectionString = configuration.GetConnectionString("Cache") ??
+                                  throw new ArgumentNullException(nameof(configuration));
 
         services.AddStackExchangeRedisCache(options => options.Configuration = connectionString);
 

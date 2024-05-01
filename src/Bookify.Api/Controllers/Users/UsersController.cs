@@ -2,6 +2,7 @@
 using Bookify.Application.Users.GetLoggedInUser;
 using Bookify.Application.Users.LogInUser;
 using Bookify.Application.Users.RegisterUser;
+using Bookify.Domain.Abstractions;
 using Bookify.Infrastructure.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,7 +28,7 @@ public class UsersController : ControllerBase
     {
         var query = new GetLoggedInUserQuery();
 
-        var result = await _sender.Send(query, cancellationToken);
+        Result<UserResponse> result = await _sender.Send(query, cancellationToken);
 
         return Ok(result.Value);
     }
@@ -44,7 +45,7 @@ public class UsersController : ControllerBase
             request.LastName,
             request.Password);
 
-        var result = await _sender.Send(command, cancellationToken);
+        Result<Guid> result = await _sender.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {
@@ -62,7 +63,7 @@ public class UsersController : ControllerBase
     {
         var command = new LogInUserCommand(request.Email, request.Password);
 
-        var result = await _sender.Send(command, cancellationToken);
+        Result<AccessTokenResponse> result = await _sender.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {

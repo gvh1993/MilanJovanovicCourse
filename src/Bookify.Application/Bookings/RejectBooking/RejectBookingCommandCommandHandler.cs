@@ -25,14 +25,14 @@ internal sealed class RejectBookingCommandCommandHandler : ICommandHandler<Rejec
         RejectBookingCommand request,
         CancellationToken cancellationToken)
     {
-        var booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
+        Booking? booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
 
         if (booking is null)
         {
             return Result.Failure(BookingErrors.NotFound);
         }
 
-        var result = booking.Reject(_dateTimeProvider.UtcNow);
+        Result result = booking.Reject(_dateTimeProvider.UtcNow);
 
         if (result.IsFailure)
         {
